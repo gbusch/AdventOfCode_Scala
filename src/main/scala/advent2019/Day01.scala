@@ -6,13 +6,16 @@ object Day01 {
   }
 
   def allFuelPerModule(mass: Int): Int = {
-    val additionalFuel: Int = fuelPerModule(mass)
-    if (additionalFuel < 0) {
-      0
-    } else {
-      additionalFuel + allFuelPerModule(additionalFuel)
+    @scala.annotation.tailrec
+    def go(acc: Int, mass: Int): Int = {
+      val additionalFuel: Int = fuelPerModule(mass)
+      if (additionalFuel < 0) {
+        acc
+      } else {
+        go(acc + additionalFuel, additionalFuel)
+      }
     }
-
+    go(0, mass)
   }
 
 
